@@ -5,7 +5,7 @@ terraform {
     organization = "netology-tf-repo"
 
     workspaces {
-      name = "getting-started"
+      name = "test-workspace"
     }
   }
 
