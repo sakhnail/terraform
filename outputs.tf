@@ -14,10 +14,10 @@ output "region_name" {
   value = data.aws_region.current.name
 }
 
-output "private_ip" {
-  value = aws_instance.test4netology.private_ip
-}
+#output "private_ip" {
+#  value = aws_instance.test4netology.private_ip
+#}
 
-output "subnet_id" {
-  value = aws_instance.test4netology.subnet_id
-}
+#output "subnet_id" {
+#  value = aws_instance.test4netology.subnet_id
+#}
