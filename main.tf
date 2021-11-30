@@ -15,25 +15,22 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] # Canonical
+  owners = ["099720109477"]
 }
 
-terraform {
- backend "s3" {
-   bucket         = "terraform-test-netology"
-   encrypt        = true
-   key            = "test/terraform.tfstate"
-   region         = "eu-west-2"
-   dynamodb_table = "terraform-locks"
- }
-}
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
 
-resource "aws_instance" "test" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  name = "test4netology"
+
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.micro"
+  monitoring             = true
 
   tags = {
-    Name = "testubuntu"
+    Terraform   = "true"
+    Environment = "dev"
   }
 }
 
