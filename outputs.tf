@@ -1,42 +1,23 @@
-provider "aws" {
-  region = "eu-west-2"
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
+output "caller_arn" {
+  value = data.aws_caller_identity.current.arn
 }
 
-terraform {
- backend "s3" {
-   bucket         = "terraform-test-netology"
-   encrypt        = true
-   key            = "test/terraform.tfstate"
-   region         = "eu-west-2"
-   dynamodb_table = "terraform-locks"
- }
+output "caller_user" {
+  value = data.aws_caller_identity.current.user_id
 }
 
-resource "aws_instance" "test" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
-
-  tags = {
-    Name = "testubuntu"
-  }
+output "region_name" {
+  value = data.aws_region.current.name
 }
 
-data "aws_caller_identity" "current" {}
+output "private_ip" {
+  value = aws_instance.test.private_ip
+}
 
-data "aws_region" "current" {}
+output "subnet_id" {
+  value = aws_instance.test.subnet_id
+}
